@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обратная связь</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            display: flex;
+            
+            padding: 120px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 50vh;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        #chart {
+            margin: 40px;
+            width: 300px;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="chart"></canvas>
+
+    <h2>Поделись впечатлениями</h2>
+
+    <button onclick="submitResponse(0)">🟢 Всы было понятно</button>
+    <button onclick="submitResponse(1)">🔴 Было что-то не понятно</button>
+    <button onclick="submitResponse(2)">🟡 Били вопросы но на практике все понял</button>
+
+    <script>
+        const responses = [0, 0, 0];  // Счетчик ответов
+        const ctx = document.getElementById('chart').getContext('2d');
+        let chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Всы было понятно', 'Было что-то не понятно', 'Били вопросы но на практике все понял'],
+                datasets: [{
+                    label: 'Количество ответов',
+                    data: responses,
+                    backgroundColor: ['#4caf50', '#f44336', '#ffeb3b']
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        function submitResponse(index) {
+            responses[index]++;
+            chart.update();  // Обновление графика
+        }
+    </script>
+
+</body>
+</html>
